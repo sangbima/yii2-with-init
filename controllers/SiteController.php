@@ -86,12 +86,13 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
-        }
+        } else {
+            $model->password = '';
 
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -136,16 +137,12 @@ class SiteController extends Controller
 
     public function actionSignup()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->redirect('/frontend');
-        }
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
         }
 
-        $model->gender = TRUE;
         return $this->render('signup', [
             'model' => $model,
         ]);
@@ -215,10 +212,6 @@ class SiteController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
         if ($user = $model->verifyEmail()) {
-            $auth = \Yii::$app->authManager;
-            $authRole = $auth->getRole('User');
-            $auth->assign($authRole, $user->id);
-
             if (Yii::$app->user->login($user)) {
                 Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
                 return $this->goHome();

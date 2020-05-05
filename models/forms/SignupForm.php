@@ -25,7 +25,7 @@ class SignupForm extends Model
     {
         return [
             ['email', 'trim'],
-            [['email', 'password', 'repeat_password', 'fullname', 'phone_number', 'gender'], 'required'],
+            [['email', 'password', 'repeat_password'], 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This email address has already been taken.'],
@@ -48,11 +48,6 @@ class SignupForm extends Model
         $user = new User();
         $user->username = $this->email;
         $user->email = $this->email;
-        $user->fullname = $this->fullname;
-        $user->gender = $this->gender;
-        $user->phone_number = $this->phone_number;
-        $user->status = 9;
-        $user->is_backend = 0;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generatePasswordResetToken();

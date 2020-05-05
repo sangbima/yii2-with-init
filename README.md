@@ -14,6 +14,7 @@ FEATURES:
 
 * Init System, for development (dev) OR production (prod)
 * Bootstrap 4
+* Fontawesome
 * User features
     * Signup
     * Login/Logout
@@ -28,6 +29,7 @@ DIRECTORY STRUCTURE
       config/             contains application configurations
       controllers/        contains Web controller classes
       environtments/      contains Environtment configuration (dev/prod)
+      grid/               contains ActionColumn Class
       mail/               contains view files for e-mails
       migrations/         contains migration files (user tabel migration)
       models/             contains model classes
@@ -54,6 +56,10 @@ INSTALLATION
     ~~~
     git clone https://github.com/sangbima/yii2-with-init.git
     ~~~
+* Install dependency
+    ~~~
+    composer install
+    ~~~
 * Init your app
     ~~~
     cd yii2-with-init
@@ -70,6 +76,31 @@ directly under the Web root.
 
 ~~~
 http://localhost/yii2-with-init/web/
+~~~
+
+SETUP GRIDVIEW:
+--------------
+
+~~~php
+GridView::Widget([
+    'dataProvider' => $dataProvider,
+    'filterModel' => $searchModel,
+    'pager' => \yii\bootstrap4\LinkPager::class,
+    'columns' => [
+        ...,
+        ['class' => 'app\grid\ActionColumn']
+    ]
+])
+~~~
+
+SETUP LISTVIEW:
+--------------
+
+~~~php
+ListView::Widget([
+    'dataProvider' => $dataProvider,
+    'pager' => \yii\bootstrap4\LinkPager::class
+])
 ~~~
 
 ### Install with Docker

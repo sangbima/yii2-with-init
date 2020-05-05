@@ -7,7 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
-use yii\base\BaseObject;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user".
@@ -28,7 +28,7 @@ use yii\base\BaseObject;
  *
  */
 
-class User extends BaseObject implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_ACTIVE = 10;
     const STATUS_INACTIVE = 9;
@@ -117,6 +117,17 @@ class User extends BaseObject implements IdentityInterface
     public static function findByUsername($username)
     {
         return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    /**
+     * Finds user by email
+     *
+     * @param string $email
+     * @return static|null
+     */
+    public static function findByEmail($email)
+    {
+        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
