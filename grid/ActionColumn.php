@@ -13,7 +13,7 @@ class ActionColumn extends \yii\grid\ActionColumn
     protected function initDefaultButtons()
     {
         $this->initDefaultButton('view', 'far fa-eye');
-        $this->initDefaultButton('update', 'far fa-edit');
+        $this->initDefaultButton('update', 'fas fa-pen');
         $this->initDefaultButton('delete', 'fas fa-trash', [
             'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
             'data-method' => 'post',

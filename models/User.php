@@ -7,7 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
-use yii\db\ActiveRecord;
+use app\models\base\BaseModel;
 
 /**
  * This is the model class for table "user".
@@ -28,7 +28,7 @@ use yii\db\ActiveRecord;
  *
  */
 
-class User extends ActiveRecord implements IdentityInterface
+class User extends BaseModel implements IdentityInterface
 {
     const STATUS_ACTIVE = 10;
     const STATUS_INACTIVE = 9;
@@ -97,7 +97,11 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne([
+            'id' => $id, 
+            'status' => self::STATUS_ACTIVE,
+            'deleted_at' => null
+        ]);
     }
 
     /**
@@ -116,7 +120,11 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne([
+            'username' => $username, 
+            'status' => self::STATUS_ACTIVE,
+            'deleted_at' => null
+        ]);
     }
 
     /**
@@ -127,7 +135,11 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByEmail($email)
     {
-        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne([
+            'email' => $email, 
+            'status' => self::STATUS_ACTIVE,
+            'deleted_at' => null
+        ]);
     }
 
     /**
@@ -145,6 +157,7 @@ class User extends ActiveRecord implements IdentityInterface
         return static::findOne([
             'password_reset_token' => $token,
             'status' => self::STATUS_ACTIVE,
+            'deleted_at' => null
         ]);
     }
 
@@ -158,7 +171,8 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne([
             'verification_token' => $token,
-            'status' => self::STATUS_INACTIVE
+            'status' => self::STATUS_INACTIVE,
+            'deleted_at' => null
         ]);
     }
 
