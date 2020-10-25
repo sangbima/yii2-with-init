@@ -88,7 +88,9 @@ SETUP GRIDVIEW:
 GridView::Widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
-    'pager' => \yii\bootstrap4\LinkPager::class,
+    'pager' => [
+        'class' => \yii\bootstrap4\LinkPager::class,
+    ],
     'columns' => [
         ...,
         ['class' => 'app\grid\ActionColumn']
@@ -102,7 +104,9 @@ SETUP LISTVIEW:
 ~~~php
 ListView::Widget([
     'dataProvider' => $dataProvider,
-    'pager' => \yii\bootstrap4\LinkPager::class
+    'pager' => [
+        'class' => \yii\bootstrap4\LinkPager::class,
+    ]
 ])
 ~~~
 
